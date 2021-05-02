@@ -105,31 +105,31 @@ void sha256_update(u512_t data, u32_t hash[8]){
 	/* Temporary Variables*/
 	u32_t a, b, c, d, e, f, g, h;
 
-	/* M-series Temporary Variables */
-	u32_t m[64];
-	u32_t msig0[64];
-	u32_t msig1[64];
+	/* W-series Temporary Variables */
+	u32_t w[64];
+	u32_t wsig0[64];
+	u32_t wsig1[64];
 
 #if USE_HLS_PRAGMA
-#pragma HLS ARRAY_PARTITION variable=m complete dim=1
-#pragma HLS ARRAY_PARTITION variable=msig0 complete dim=1
-#pragma HLS ARRAY_PARTITION variable=msig1 complete dim=1
+#pragma HLS ARRAY_PARTITION variable=w complete dim=1
+#pragma HLS ARRAY_PARTITION variable=wsig0 complete dim=1
+#pragma HLS ARRAY_PARTITION variable=wsig1 complete dim=1
 #endif
 
 	/* Copy Current Hash Value to Temporary Variables */
 	a = hash[0], b = hash[1], c = hash[2], d = hash[3];
 	e = hash[4], f = hash[5], g = hash[6], h = hash[7];
 
-	/* Assign First 16 M */
+	/* Assign First 16 W */
 ASSIGN_M_0_16:
 	for (u32_t i = 0; i<16; i++){
 #if USE_HLS_PRAGMA
 #pragma HLS UNROLL
 #endif
-		u32_t tmp_mi = data(511-i*32, 480-i*32);
-		m[i] 	 = tmp_mi;
-		msig0[i] = SIG0(tmp_mi);
-		msig1[i] = SIG1(tmp_mi);
+		u32_t tmp_wi = data(511-i*32, 480-i*32);
+		w[i] 	 = tmp_wi;
+		wsig0[i] = SIG0(tmp_wi);
+		wsig1[i] = SIG1(tmp_wi);
 	}
 
 	/* Iterate 64 times */
@@ -142,23 +142,23 @@ ITERATE_64:
 #pragma HLS PIPELINE
 #endif
 #endif
-		/* Temporary Mi */
-		u32_t tmp_mi = m[i];
+		/* Temporary Wi */
+		u32_t tmp_wi = w[i];
 
 		/* Forward Calculation
 		 *   1. For Reducing the Critical Path
 		 * */
 		if (i < 64-16) {
-			u32_t tmp_mi_16 = msig1[i+14] + m[i+9] + msig0[i+1] + tmp_mi;
-			m[i+16] = tmp_mi_16;
-			msig0[i+16] = SIG0(tmp_mi_16);
-			msig1[i+16] = SIG1(tmp_mi_16);
+			u32_t tmp_wi_16 = wsig1[i+14] + w[i+9] + wsig0[i+1] + tmp_wi;
+			w[i+16] = tmp_wi_16;
+			wsig0[i+16] = SIG0(tmp_wi_16);
+			wsig1[i+16] = SIG1(tmp_wi_16);
 		}
 
 #if II3
 		/* Temporal Summation */
-		u32_t tmp_e = d + h + EP1(e) + CH(e,f,g) + k[i] + tmp_mi;
-		u32_t tmp_a =     h + EP1(e) + CH(e,f,g) + k[i] + tmp_mi + EP0(a) + MAJ(a,b,c);
+		u32_t tmp_e = d + h + EP1(e) + CH(e,f,g) + k[i] + tmp_wi;
+		u32_t tmp_a =     h + EP1(e) + CH(e,f,g) + k[i] + tmp_wi + EP0(a) + MAJ(a,b,c);
 
 		/* Swap Values*/
 		h = g;
@@ -172,7 +172,7 @@ ITERATE_64:
 		a = tmp_a;
 #else
 		/* Temporal Summation */
-		u32_t t1 = h + EP1(e) + CH(e,f,g) + k[i] + tmp_mi;
+		u32_t t1 = h + EP1(e) + CH(e,f,g) + k[i] + tmp_wi;
 		u32_t t2 = EP0(a) + MAJ(a,b,c);
 
 		/* Swap Values*/
@@ -194,31 +194,31 @@ ITERATE_64:
 	/* Temporary Variables*/
 	u32_t a, b, c, d, e, f, g, h;
 
-	/* M-series Temporary Variables */
-	u32_t m[16];
-	u32_t msig0[16];
-	u32_t msig1[16];
+	/* W-series Temporary Variables */
+	u32_t w[16];
+	u32_t wsig0[16];
+	u32_t wsig1[16];
 
 #if USE_HLS_PRAGMA
-#pragma HLS ARRAY_PARTITION variable=m complete dim=1
-#pragma HLS ARRAY_PARTITION variable=msig0 complete dim=1
-#pragma HLS ARRAY_PARTITION variable=msig1 complete dim=1
+#pragma HLS ARRAY_PARTITION variable=w complete dim=1
+#pragma HLS ARRAY_PARTITION variable=wsig0 complete dim=1
+#pragma HLS ARRAY_PARTITION variable=wsig1 complete dim=1
 #endif
 
 	/* Copy Current Hash Value to Temporary Variables */
 	a = hash[0], b = hash[1], c = hash[2], d = hash[3];
 	e = hash[4], f = hash[5], g = hash[6], h = hash[7];
 
-	/* Assign First 16 M */
+	/* Assign First 16 W */
 ASSIGN_M_0_16:
 	for (u32_t i = 0; i<16; i++){
 #if USE_HLS_PRAGMA
 #pragma HLS UNROLL
 #endif
-		u32_t tmp_mi = data(511-i*32, 480-i*32);
-		m[i] 	 = tmp_mi;
-		msig0[i] = SIG0(tmp_mi);
-		msig1[i] = SIG1(tmp_mi);
+		u32_t tmp_wi = data(511-i*32, 480-i*32);
+		w[i] 	 = tmp_wi;
+		wsig0[i] = SIG0(tmp_wi);
+		wsig1[i] = SIG1(tmp_wi);
 	}
 
 	/* Iterate 64 times */
@@ -231,13 +231,13 @@ ITERATE_64:
 #pragma HLS PIPELINE
 #endif
 #endif
-		/* Temporary Mi */
+		/* Temporary Wi */
 		ap_uint<4> cur = i;
-		u32_t tmp_mi = m[cur];
+		u32_t tmp_wi = w[cur];
 
 		/* Temporal Summation */
-		u32_t tmp_e = d + h + EP1(e) + CH(e,f,g) + k[i] + tmp_mi;
-		u32_t tmp_a =     h + EP1(e) + CH(e,f,g) + k[i] + tmp_mi + EP0(a) + MAJ(a,b,c);
+		u32_t tmp_e = d + h + EP1(e) + CH(e,f,g) + k[i] + tmp_wi;
+		u32_t tmp_a =     h + EP1(e) + CH(e,f,g) + k[i] + tmp_wi + EP0(a) + MAJ(a,b,c);
 
 		/* Swap Values*/
 		h = g;
@@ -254,10 +254,10 @@ ITERATE_64:
 		 *   1. For Reducing the Critical Path
 		 * */
 		if (i < 64-16) {
-			u32_t tmp_mi_16 = msig1[(ap_uint<4>)(cur+14)] + m[(ap_uint<4>)(cur+9)] + msig0[(ap_uint<4>)(cur+1)] + tmp_mi;
-			m[cur] = tmp_mi_16;
-			msig0[cur] = SIG0(tmp_mi_16);
-			msig1[cur] = SIG1(tmp_mi_16);
+			u32_t tmp_wi_16 = wsig1[(ap_uint<4>)(cur+14)] + w[(ap_uint<4>)(cur+9)] + wsig0[(ap_uint<4>)(cur+1)] + tmp_wi;
+			w[cur] = tmp_wi_16;
+			wsig0[cur] = SIG0(tmp_wi_16);
+			wsig1[cur] = SIG1(tmp_wi_16);
 		}
 	}
 
