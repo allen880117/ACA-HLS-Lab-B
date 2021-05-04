@@ -1,0 +1,216 @@
+
+
+================================================================
+== Vivado HLS Report for 'sha256_read'
+================================================================
+* Date:           Wed May  5 06:58:28 2021
+
+* Version:        2019.2 (Build 2704478 on Wed Nov 06 22:10:23 MST 2019)
+* Project:        sha256
+* Solution:       solution1
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  | 5.00 ns | 4.375 ns |   0.62 ns  |
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute)  |  Interval | Pipeline|
+    |   min   |   max   |    min    |    max   | min | max |   Type  |
+    +---------+---------+-----------+----------+-----+-----+---------+
+    |        8|      264| 40.000 ns | 1.320 us |    8|  264|   none  |
+    +---------+---------+-----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +----------+---------+---------+----------+-----------+-----------+--------+----------+
+        |          |  Latency (cycles) | Iteration|  Initiation Interval  |  Trip  |          |
+        | Loop Name|   min   |   max   |  Latency |  achieved |   target  |  Count | Pipelined|
+        +----------+---------+---------+----------+-----------+-----------+--------+----------+
+        |- READ    |        0|      256|         4|          -|          -| 0 ~ 64 |    no    |
+        +----------+---------+---------+----------+-----------+-----------+--------+----------+
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+-------+--------+-------+-----+
+|       Name      | BRAM_18K| DSP48E|   FF   |  LUT  | URAM|
++-----------------+---------+-------+--------+-------+-----+
+|DSP              |        -|      -|       -|      -|    -|
+|Expression       |        -|      -|       0|   9836|    -|
+|FIFO             |        -|      -|       -|      -|    -|
+|Instance         |        -|      -|       -|      -|    -|
+|Memory           |        -|      -|       -|      -|    -|
+|Multiplexer      |        -|      -|       -|    101|    -|
+|Register         |        -|      -|    2254|      -|    -|
++-----------------+---------+-------+--------+-------+-----+
+|Total            |        0|      0|    2254|   9937|    0|
++-----------------+---------+-------+--------+-------+-----+
+|Available        |      280|    220|  106400|  53200|    0|
++-----------------+---------+-------+--------+-------+-----+
+|Utilization (%)  |        0|      0|       2|     18|    0|
++-----------------+---------+-------+--------+-------+-----+
+
++ Detail: 
+    * Instance: 
+    N/A
+
+    * DSP48E: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +--------------------------+----------+-------+---+------+------------+------------+
+    |       Variable Name      | Operation| DSP48E| FF|  LUT | Bitwidth P0| Bitwidth P1|
+    +--------------------------+----------+-------+---+------+------------+------------+
+    |add_ln12_fu_131_p2        |     +    |      0|  0|    40|          33|          33|
+    |i_V_fu_152_p2             |     +    |      0|  0|    39|          32|           1|
+    |Hi_fu_164_p2              |     -    |      0|  0|    39|           9|          32|
+    |Lo_fu_170_p2              |     -    |      0|  0|    39|           9|          32|
+    |sub_ln414_1_fu_199_p2     |     -    |      0|  0|    14|           9|          10|
+    |sub_ln414_fu_188_p2       |     -    |      0|  0|    14|           9|          10|
+    |and_ln414_1_fu_273_p2     |    and   |      0|  0|   512|         512|         512|
+    |and_ln414_2_fu_279_p2     |    and   |      0|  0|   512|         512|         512|
+    |and_ln414_fu_247_p2       |    and   |      0|  0|   512|         512|         512|
+    |icmp_ln414_fu_184_p2      |   icmp   |      0|  0|    18|          32|          32|
+    |icmp_ln6_fu_147_p2        |   icmp   |      0|  0|    18|          32|          32|
+    |lshr_ln414_fu_241_p2      |   lshr   |      0|  0|  2171|           2|         512|
+    |p_Result_s_fu_284_p2      |    or    |      0|  0|   512|         512|         512|
+    |select_ln414_1_fu_208_p3  |  select  |      0|  0|    10|           1|          10|
+    |select_ln414_2_fu_213_p3  |  select  |      0|  0|    10|           1|          10|
+    |select_ln414_3_fu_262_p3  |  select  |      0|  0|   512|           1|         512|
+    |select_ln414_fu_193_p3    |  select  |      0|  0|    10|           1|          10|
+    |shl_ln414_1_fu_235_p2     |    shl   |      0|  0|  2171|           2|         512|
+    |shl_ln414_fu_229_p2       |    shl   |      0|  0|  2171|         512|         512|
+    |xor_ln414_fu_268_p2       |    xor   |      0|  0|   512|           2|         512|
+    +--------------------------+----------+-------+---+------+------------+------------+
+    |Total                     |          |      0|  0|  9836|        2735|        4820|
+    +--------------------------+----------+-------+---+------+------------+------------+
+
+    * Multiplexer: 
+    +------------------+----+-----------+-----+-----------+
+    |       Name       | LUT| Input Size| Bits| Total Bits|
+    +------------------+----+-----------+-----+-----------+
+    |ap_NS_fsm         |  56|         13|    1|         13|
+    |ap_return         |   9|          2|  512|       1024|
+    |ctx_mem_blk_n_AR  |   9|          2|    1|          2|
+    |ctx_mem_blk_n_R   |   9|          2|    1|          2|
+    |p_Val2_s_reg_102  |   9|          2|  512|       1024|
+    |t_V_reg_112       |   9|          2|   32|         64|
+    +------------------+----+-----------+-----+-----------+
+    |Total             | 101|         23| 1059|       2129|
+    +------------------+----+-----------+-----+-----------+
+
+    * Register: 
+    +---------------------------+-----+----+-----+-----------+
+    |            Name           |  FF | LUT| Bits| Const Bits|
+    +---------------------------+-----+----+-----+-----------+
+    |Hi_reg_315                 |   29|   0|   32|          3|
+    |Lo_reg_320                 |   29|   0|   32|          3|
+    |and_ln414_reg_367          |  512|   0|  512|          0|
+    |ap_CS_fsm                  |   12|   0|   12|          0|
+    |ap_return_preg             |  512|   0|  512|          0|
+    |ctx_mem_addr_read_reg_339  |    8|   0|    8|          0|
+    |ctx_mem_addr_reg_290       |   32|   0|   32|          0|
+    |i_V_reg_310                |   32|   0|   32|          0|
+    |icmp_ln414_reg_344         |    1|   0|    1|          0|
+    |p_Val2_s_reg_102           |  512|   0|  512|          0|
+    |shl_ln414_reg_361          |  512|   0|  512|          0|
+    |sub_ln414_1_reg_356        |   10|   0|   10|          0|
+    |sub_ln414_reg_351          |    7|   0|   10|          3|
+    |t_V_reg_112                |   32|   0|   32|          0|
+    |trunc_ln414_1_reg_333      |    7|   0|   10|          3|
+    |trunc_ln414_reg_325        |    7|   0|   10|          3|
+    +---------------------------+-----+----+-----+-----------+
+    |Total                      | 2254|   0| 2269|         15|
+    +---------------------------+-----+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++------------------------+-----+-----+------------+----------------+--------------+
+|        RTL Ports       | Dir | Bits|  Protocol  |  Source Object |    C Type    |
++------------------------+-----+-----+------------+----------------+--------------+
+|ap_clk                  |  in |    1| ap_ctrl_hs |   sha256_read  | return value |
+|ap_rst                  |  in |    1| ap_ctrl_hs |   sha256_read  | return value |
+|ap_start                |  in |    1| ap_ctrl_hs |   sha256_read  | return value |
+|ap_done                 | out |    1| ap_ctrl_hs |   sha256_read  | return value |
+|ap_idle                 | out |    1| ap_ctrl_hs |   sha256_read  | return value |
+|ap_ready                | out |    1| ap_ctrl_hs |   sha256_read  | return value |
+|ap_return               | out |  512| ap_ctrl_hs |   sha256_read  | return value |
+|m_axi_ctx_mem_AWVALID   | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWREADY   |  in |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWADDR    | out |   32|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWID      | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWLEN     | out |   32|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWSIZE    | out |    3|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWBURST   | out |    2|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWLOCK    | out |    2|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWCACHE   | out |    4|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWPROT    | out |    3|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWQOS     | out |    4|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWREGION  | out |    4|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_AWUSER    | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_WVALID    | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_WREADY    |  in |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_WDATA     | out |    8|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_WSTRB     | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_WLAST     | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_WID       | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_WUSER     | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARVALID   | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARREADY   |  in |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARADDR    | out |   32|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARID      | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARLEN     | out |   32|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARSIZE    | out |    3|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARBURST   | out |    2|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARLOCK    | out |    2|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARCACHE   | out |    4|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARPROT    | out |    3|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARQOS     | out |    4|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARREGION  | out |    4|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_ARUSER    | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_RVALID    |  in |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_RREADY    | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_RDATA     |  in |    8|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_RLAST     |  in |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_RID       |  in |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_RUSER     |  in |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_RRESP     |  in |    2|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_BVALID    |  in |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_BREADY    | out |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_BRESP     |  in |    2|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_BID       |  in |    1|    m_axi   |     ctx_mem    |    pointer   |
+|m_axi_ctx_mem_BUSER     |  in |    1|    m_axi   |     ctx_mem    |    pointer   |
+|ctx_mem_offset          |  in |   32|   ap_none  | ctx_mem_offset |    scalar    |
+|data_V_read             |  in |  512|   ap_none  |   data_V_read  |    scalar    |
+|offset_V                |  in |   10|   ap_none  |    offset_V    |    scalar    |
+|byte_len_V              |  in |   32|   ap_none  |   byte_len_V   |    scalar    |
++------------------------+-----+-----+------------+----------------+--------------+
+
