@@ -4,6 +4,7 @@
 #define USE_HLS_PRAGMA 1
 #define II3 1
 #define M16 1
+#define DBUF 0
 
 // ap_uint.lrotate & ap_uint.rrotate have some problems in my implementation,
 // so use naive method instead.
@@ -55,6 +56,7 @@ UPDATE:
 #if USE_HLS_PRAGMA
 #pragma HLS LOOP_FLATTEN off
 #endif
+
 		/* Preserve Tail Context */
 		if (offset + 64 > ctx_len)
 			break;
