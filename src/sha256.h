@@ -73,8 +73,7 @@ void sha256_read(volatile char* ctx_mem, u512_t &data, u64_t offset,
 
 /* Switch */
 #define BASIC_OPT 1
-#define II2_UPDATE 0
-#define W_16 0
+#define II2_UPDATE 1
+#define W_16 1
 #define DOUBLE_BUFFER 1
-
 #endif
